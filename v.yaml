@@ -1,0 +1,1340 @@
+openapi: 3.0.4
+info:
+  title: SGCX - OpenAPI 3.0
+  termsOfService: https://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.12
+externalDocs:
+  description: Find out more about Swagger
+  url: https://swagger.io
+servers:
+  - url: https://petstore3.swagger.io/api/v3
+tags:
+
+  - name: auth
+    description: Endpoints for managing authentication.
+
+  - name: project
+    description: Operations related to project data, overview, and metrics.
+
+  - name: invoicing
+    description: Endpoints for managing project and client invoicing.
+
+  - name: group
+    description: Master data for groups.
+
+  - name: area
+    description: Master data for company areas.
+
+  - name: client
+    description: Master data for clients.
+
+  - name: period
+    description: Available time periods for reporting.
+
+
+
+
+paths:
+
+  /auth/login:
+    post:
+
+      tags:
+        - auth
+      summary: Login user into the system.
+      description: Log into the system.
+
+      requestBody:
+        description: Log in user into the system.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenResponse'
+
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '401':
+          description: Invalid username/password supplied
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /auth/logout:
+    post:
+      tags:
+        - auth
+      summary: Logs out current logged in user session.
+      description: Log user out of the system.
+      operationId: logoutUser
+      parameters: []
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid logout request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: User session not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /group:
+    get:
+
+      security:
+        - bearerAuth: []
+      tags:
+        - group
+      summary: Find all groups
+      description: return all groups for select filters
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: Groups not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /area:
+    get:
+
+      security:
+        - bearerAuth: []
+      tags:
+        - area
+      summary: Find all areas
+      description: return all areas for select filters
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Area'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: Areas not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /period:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - period
+      summary: Find all periods
+      description: return all periods for select filters
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Period'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: Periods not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /client:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - client
+      summary: Find all client
+      description: return all clients for select filters
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Client'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: Clients not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /project/{id}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - project
+      summary: Find project by project id
+      description: Return a single project.
+      parameters:
+        - name: id
+          in: path
+          description: Id of project to return
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: Project not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /project/findOverviewByFilters:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - project
+      summary: Find projects overviews by filters.
+      description: Return the project overviews.
+      parameters:
+        - name: pep
+          in: query
+          description: Pep.
+          required: false
+          schema:
+            type: string
+        - name: projectManagerId
+          in: query
+          description: Project Manager Id.
+          required: false
+          schema:
+            type: integer
+        - name: clientId
+          in: query
+          description: Client Id.
+          required: false
+          schema:
+            type: integer
+        - name: reviewStatus
+          in: query
+          description: Project review status.
+          required: false
+          schema:
+            type: integer
+        - name: group
+          in: query
+          description: Group to which the project belongs.
+          required: false
+          schema:
+            type: string
+        - name: area
+          in: query
+          description: Area responsible for the project.
+          required: false
+          schema:
+            type: string
+        - name: active_proyects
+          in: query
+          description: Shows the projects that are currently active.
+          required: false
+          schema:
+            type: boolean
+        - name: period
+          in: query
+          description: Project period.
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectOverview'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: No projects found matching filters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /project/data:
+
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - project
+      summary: Find project data of a project by period and projectId.
+      description: Return the project data.
+      parameters:
+        - name: projectId
+          in: query
+          description: Id of project.
+          required: true
+          schema:
+            type: string
+        - name: periodCode
+          in: query
+          description: Project period code.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDataRequest'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: Project not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    post:
+
+      security:
+        - bearerAuth: []
+      tags:
+        - project
+      summary: Create project data for a given period and project id.
+      description: Create project data.
+      parameters:
+        - name: projectId
+          in: query
+          description: Id of project.
+          required: true
+          schema:
+            type: string
+        - name: periodCode
+          in: query
+          description: Project period code.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectDataRequest'
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: Project not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - project
+      summary: Update project data for a given period and project id.
+      description: Update project data.
+      parameters:
+        - name: projectId
+          in: query
+          description: Id of project.
+          required: true
+          schema:
+            type: string
+        - name: periodCode
+          in: query
+          description: Project period code.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Update existing project data.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProjectDataRequest'
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: Project not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /project/data/{projectId}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - project
+      summary: Find all project data of a project by projectId.
+      description: Return all project data entries for the given project.
+      parameters:
+        - name: projectId
+          in: path
+          description: Id of project.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ProjectDataResponse'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: Project not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /invoicing:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - invoicing
+      summary: Find all the project's billing for a given time frame.
+      description: Return all the project's billing for a given time frame.
+      parameters:
+        - name: projectId
+          in: query
+          description: Id of project.
+          required: true
+          schema:
+            type: string
+        - name: periodCode
+          in: query
+          description: Project period code.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvoicingResponse'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: No invoicing records found for the given filters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - invoicing
+      summary: Add new billing for a project.
+      description: Add new billing for a project.
+      parameters:
+        - name: projectId
+          in: query
+          description: Id of project.
+          required: true
+          schema:
+            type: string
+        - name: periodCode
+          in: query
+          description: Project period code.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Create a new billing for a project.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoicingRequest'
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: Project not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '422':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /invoicing/{invoicingId}:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - invoicing
+      summary: Find invoicing by id.
+      description: Return a single invoicing record.
+      parameters:
+        - name: invoicingId
+          in: path
+          description: Id of the invoicing record to return.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InvoicingResponse'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: Invoicing not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - invoicing
+      summary: Update invoicing resource.
+      description: Update an existing invoicing record.
+      parameters:
+        - name: invoicingId
+          in: path
+          description: Id of the invoicing record to update.
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Update an existing billing record.
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoicingRequest'
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: Invoicing not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+  /invoicing/withoutPep:
+    get:
+      security:
+        - bearerAuth: []
+      tags:
+        - invoicing
+      summary: Find all the billing without project.
+      description: Return all the billing records that are not associated with a project.
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InvoicingResponse'
+        '400':
+          description: Invalid request parameters
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: No billing records found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    post:
+      security:
+        - bearerAuth: []
+      tags:
+        - invoicing
+      summary: Add new billing without project.
+      description: Create a new billing record not linked to any project.
+      requestBody:
+        required: true
+        description: Create a new billing without project.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoicingWithoutPepRequest'
+      responses:
+        '201':
+          description: Successful operation
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: Related client or area not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '422':
+          description: Validation exception
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /invoicing/withoutPep/{invoicingId}:
+    put:
+      security:
+        - bearerAuth: []
+      tags:
+        - invoicing
+      summary: Update invoicing resource.
+      description: Update an existing billing record not linked to any project.
+      parameters:
+        - name: invoicingId
+          in: path
+          description: ID of the invoicing record to update.
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        description: Update an existing billing record without project association.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InvoicingWithoutPepRequest'
+      responses:
+        '200':
+          description: Successful operation
+        '400':
+          description: Invalid request body
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        '404':
+          description: Invoicing record not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+components:
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+
+    AuthRequest:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The username for login
+          example: ppe@eidor.es
+        password:
+          type: string
+          description: The password for login
+          example: ask2erksda
+    AuthTokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+          description: JWT access token to be used in subsequent requests.
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        token_type:
+          type: string
+          description: Token type (usually "Bearer").
+          example: Bearer
+        expires_in:
+          type: integer
+          description: Expiration time in seconds.
+          example: 3600
+
+    Group:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Business Growth"
+        short_name:
+          type: string
+          example: "BG"
+    Area:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Customer Experience"
+        short_name:
+          type: string
+          example: "CX"
+    Period:
+      type: object
+      properties:
+        code:
+          type: string
+          example: "2023-01"
+        year:
+          type: string
+          example: "2023"
+        month:
+          type: string
+          example: "1"
+        enabled:
+          type: boolean
+          example: true
+    Client:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "Audi"
+
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: "18"
+        pep:
+          type: string
+          example: "39-ACURA-B2B"
+        name:
+          type: string
+          example: "B2B eCommerce"
+        client:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Acura"
+            commercial_sector_name:
+              type: string
+              example: "Banca"
+        start_date:
+          type: string
+          example: "18/11/2024"
+          description: Project start date in DD/MM/YYYY format
+        sold_margin:
+          type: number
+          format: double
+          example: 0,25
+        division:
+          type: integer
+          example: 39
+        budget:
+          type: number
+          format: double
+          example: 390870,00
+        area:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Customer Experience"
+            short_name:
+              type: string
+              example: "CX"
+        project_type:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "TRANSF"
+        project_model:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Bolsa de horas"
+        project_manager:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Sami Baki"
+        comercial:
+          type: string
+          example: "Miguel Gil"
+        sales_office:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Madrid"
+        delivery_office:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Madrid"
+        technology:
+          type: object
+          properties:
+            name:
+              type: string
+              example: "Springboot"
+    ProjectOverview:
+      type: object
+      properties:
+
+        id:
+          type: integer
+          example: 16
+        pep:
+          type: string
+          example: "39-ACURA-B2B"
+        project_name:
+          type: string
+          example: "B2B eCommerce"
+        client_name:
+          type: string
+          example: "B2B Acura"
+        project_manager_name:
+          type: string
+          example: "Sami Baki"
+    ProjectDataRequest:
+      type: object
+      properties:
+
+
+        review_status:
+          type: integer
+          enum: [1, 2, 3]
+          description: Review status (1=pending, 2=approved, 3=rejected)
+          example: 2
+        budget:
+          type: number
+          format: double
+          example: 150000.50
+
+        # datos acumulados
+        editable_production:
+          type: number
+          format: double
+          example: 30000.75
+        actual_progress:
+          type: number
+          format: double
+          example: 0.65
+        # previsiones
+        expected_end_date:
+          type: string
+          format: date
+          example: "2025-12-31"
+        expected_end_margin:
+          type: number
+          format: double
+          example: 0.15
+        expected_next_period_production:
+          type: number
+          format: double
+          example: 12000.00
+        expected_year_production:
+          type: number
+          format: double
+          example: 80000.00
+
+      oneOf:
+        - required: ["editable_production"]
+        - required: ["actual_progress"]
+      not:
+        required: ["editable_production", "actual_progress"]
+      description: >
+        Either `editable_production` or `actual_progress` must be provided, but not both.
+    ProjectDataResponse:
+      type: object
+      properties:
+
+        period_code:
+          type: string
+          example: "2023-01"
+          description: Period code in format YYYY-MM
+
+
+        actual_progress:
+          type: number
+          format: double
+          example: 122.50
+          description: Actual project progress (%)
+        actual_production:
+          type: number
+          format: double
+          example: 20000.00
+          description: current accumulated production
+        actual_cost:
+          type: number
+          format: double
+          example: 16250.00
+          description: Actual cost (€)
+        actual_margin:
+          type: number
+          format: double
+          example: 24.71
+          description: Actual margin (%), calculated value
+        actual_invoiced:
+          type: number
+          format: double
+          example: 16600.00
+          description: Actual invoiced amount (€), calculated
+        actual_wip:
+          type: number
+          format: double
+          example: 3400.00
+          description: Actual work in progress (€), calculated
+
+        # Calculados del periodo actual
+        period_progress:
+          type: number
+          format: double
+          example: 42.50
+          description: Progress (%) in the current period
+        period_production:
+          type: number
+          format: double
+          example: 4500.00
+        period_cost:
+          type: number
+          format: double
+          example: 3600.00
+        period_margin:
+          type: number
+          format: double
+          example: 25.00
+        period_invoiced:
+          type: number
+          format: double
+          example: 4800.00
+        period_wip:
+          type: number
+          format: double
+          example: 900.00
+
+
+    InvoicingRequest:
+      type: object
+      properties:
+        billable:
+          type: boolean
+          description: Indicates whether the invoicing is billable.
+          example: true
+        date:
+          type: string
+          format: date
+          description: Invoicing date (YYYY-MM-DD).
+          example: "2025-10-21"
+        amount:
+          type: number
+          format: double
+          description: Total amount to be invoiced (€).
+          example: 15000.50
+        sale_cost:
+          type: number
+          format: double
+          description: Sale cost (€) associated with the invoice.
+          example: 12500.00
+        concept:
+          type: string
+          description: Description or concept of the invoicing.
+          example: "Development services for October 2025"
+        comments:
+          type: string
+          description: Optional additional comments about the invoicing.
+          example: "Includes extra support hours"
+      required:
+        - billable
+        - date
+        - amount
+        - sale_cost
+        - concept
+    InvoicingWithoutPepRequest:
+      type: object
+      properties:
+        client_id:
+          type: integer
+          description: Identifier of the client related to the invoicing.
+          example: 101
+        project_name:
+          type: string
+          maxLength: 100
+          description: Name of the project or invoicing concept.
+          example: "CRM Integration without PEP"
+        division:
+          type: string
+          maxLength: 2
+          description: Division code (2-character identifier).
+          example: "39"
+        area_id:
+          type: integer
+          description: Identifier of the area responsible for the project.
+          example: 5
+        amount:
+          type: number
+          format: double
+          description: Invoiced amount (€). Defaults to 0.
+          example: 12000.00
+        sale_cost:
+          type: number
+          format: double
+          description: Sale cost (€) associated with the invoice.
+          example: 9500.00
+        concept:
+          type: string
+          description: Description or concept of the invoicing.
+          example: "Development services for October 2025"
+        comments:
+          type: string
+          description: Optional additional comments about the invoicing.
+          example: "Includes extra support hours"
+      required:
+        - client_id
+        - project_name
+        - division
+        - area_id
+        - amount
+
+    InvoicingResponse:
+      type: object
+      properties:
+        billable:
+          type: boolean
+          description: Indicates whether the invoicing is billable.
+          example: true
+        date:
+          type: string
+          format: date
+          description: Invoicing date (YYYY-MM-DD).
+          example: "2025-10-21"
+        amount:
+          type: number
+          format: double
+          description: Total amount invoiced (€).
+          example: 15000.50
+        sale_cost:
+          type: number
+          format: double
+          description: Sale cost (€) associated with the invoice.
+          example: 12500.00
+        concept:
+          type: string
+          description: Description or concept of the invoicing.
+          example: "Development services for October 2025"
+        comments:
+          type: string
+          description: Optional comments about the invoicing.
+          example: "Includes extra support hours"
+        added_value:
+          type: number
+          format: double
+          example: 2500.50
+        status:
+          type: integer
+          description: >
+            Status of the invoice  
+            (e.g. 0=no confirmado, 1=previsto, 2=facturado).
+          example: 2
+        project_name:
+          type: string
+          maxLength: 100
+          description: Name of the project associated with the invoicing.
+          example: "B2B eCommerce"
+        division:
+          type: string
+          maxLength: 2
+          description: Division code (2-character identifier).
+          example: "39"
+        client:
+          type: object
+          description: Client information related to the invoicing.
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "Audi"
+        area:
+          type: object
+          description: Area associated with the project.
+          properties:
+            id:
+              type: integer
+              example: 5
+            name:
+              type: string
+              example: "Customer Experience"
+
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+
+

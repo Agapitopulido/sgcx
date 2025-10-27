@@ -14,7 +14,4 @@ public class User {
     private boolean fullAccess;
 
 
-    private List<AreaManager> managedAreas;
-    private List<Project> managedProjects;
-
 }

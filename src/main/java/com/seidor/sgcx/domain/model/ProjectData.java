@@ -28,12 +28,6 @@ public class ProjectData {
     private Double expectedEndMargin;
     private Double expectedNextPeriodProduction;
     private Double expectedYearProduction;
-    private Double lastPeriodProgress;
-    private Double lastPeriodProduction;
-    private Double lastPeriodCost;
-    private Double lastPeriodMargin;
-    private Double lastPeriodInvoiced;
-    private Double lastPeriodWip;
     private Double periodProgress;
     private Double periodProduction;
     private Double periodCost;

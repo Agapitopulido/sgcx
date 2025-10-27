@@ -14,7 +14,4 @@ public class Period {
     private Integer year;
     private Integer month;
     private boolean enabled;
-    private List<ProjectData> projectData;
-    private List<Invoicing> invoicing;
-
 }

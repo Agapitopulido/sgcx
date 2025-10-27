@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
+
 @Getter
 @Setter
 public class Project {
@@ -25,4 +27,5 @@ public class Project {
     private Office deliveryOffice;
     private Technology technology;
 
+    private List<ProjectData> projectDataList;
 }

@@ -3,11 +3,12 @@ package com.seidor.sgcx.domain.model;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
-public class ProjectManager {
-    private Integer id;
-    private User user;
-    private Project project;
+public class ProjectManager extends User {
+
+    private List<Project> projectList;
 
 }

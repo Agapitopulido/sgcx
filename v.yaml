@@ -566,7 +566,7 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  /invoice/{invoicingId}:
+  /invoice/{invoiceId}:
     get:
       security:
         - bearerAuth: []
@@ -575,7 +575,7 @@ paths:
       summary: Find invoicing by id.
       description: Return a single invoicing record.
       parameters:
-        - name: invoicingId
+        - name: invoiceId
           in: path
           description: Id of the invoicing record to return.
           required: true
@@ -615,7 +615,7 @@ paths:
       summary: Update invoicing resource.
       description: Update an existing invoicing record.
       parameters:
-        - name: invoicingId
+        - name: invoiceId
           in: path
           description: Id of the invoicing record to return.
           required: true

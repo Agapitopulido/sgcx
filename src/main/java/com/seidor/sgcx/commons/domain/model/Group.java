@@ -1,4 +1,4 @@
-package com.seidor.sgcx.domain.model;
+package com.seidor.sgcx.commons.domain.model;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -7,11 +7,10 @@ import java.util.List;
 
 @Getter
 @Setter
-public class Area {
+public class Group {
     private Integer id;
     private String name;
     private String shortName;
-    private Group group;
-    private List<User> managers;
-    private List<Project> projects;
+    private List<Area> areas;
+
 }

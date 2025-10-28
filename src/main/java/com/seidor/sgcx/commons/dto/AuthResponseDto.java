@@ -1,4 +1,4 @@
-package com.seidor.sgcx.application.dto;
+package com.seidor.sgcx.commons.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,6 +1,9 @@
-package com.seidor.sgcx.domain.model;
+package com.seidor.sgcx.hProject.domain.model;
 
 
+import com.seidor.sgcx.commons.domain.model.Area;
+import com.seidor.sgcx.commons.domain.model.Client;
+import com.seidor.sgcx.commons.domain.model.User;
 import lombok.Getter;
 import lombok.Setter;
 

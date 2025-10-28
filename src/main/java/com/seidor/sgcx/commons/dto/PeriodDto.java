@@ -1,4 +1,4 @@
-package com.seidor.sgcx.application.dto;
+package com.seidor.sgcx.commons.dto;
 
 public class PeriodDto {
     private Integer id;

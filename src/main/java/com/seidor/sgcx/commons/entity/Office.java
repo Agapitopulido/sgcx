@@ -1,13 +1,13 @@
-package com.seidor.sgcx.infraestructure.persistence.entity;
+package com.seidor.sgcx.commons.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "technologies")
+@Table(name = "offices")
 @Getter
 @Setter
-public class Technology {
+public class Office {
     @Id
     private Integer id;
 

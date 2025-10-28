@@ -13,5 +13,7 @@ public class User {
     private String username;
     private boolean fullAccess;
 
+    private List<Area> managedAreas;
+    private List<Project> managedProjects;
 
 }

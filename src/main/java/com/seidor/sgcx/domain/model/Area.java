@@ -12,6 +12,6 @@ public class Area {
     private String name;
     private String shortName;
     private Group group;
-    private List<AreaManager> managers;
+    private List<User> managers;
     private List<Project> projects;
 }

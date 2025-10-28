@@ -20,7 +20,7 @@ public class Invoicing {
     private User userAdd;
     private User userUpdate;
     private Period period;
-    private Project project;
+    private ProjectInvoice project;
     private InvoWoPepDetail invoWoPepDetail;
     private Payer payer;
     private LocalDate date;

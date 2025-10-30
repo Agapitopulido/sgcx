@@ -11,6 +11,5 @@ public class Group {
     private Integer id;
     private String name;
     private String shortName;
-    private List<Area> areas;
 
 }

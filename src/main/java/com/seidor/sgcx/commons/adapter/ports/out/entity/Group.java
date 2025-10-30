@@ -1,4 +1,4 @@
-package com.seidor.sgcx.commons.entity;
+package com.seidor.sgcx.commons.adapter.ports.out.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;

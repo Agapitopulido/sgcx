@@ -2,8 +2,6 @@ package com.seidor.sgcx.hInvoice.domain.model;
 
 import com.seidor.sgcx.commons.domain.model.Period;
 import com.seidor.sgcx.commons.domain.model.User;
-import com.seidor.sgcx.hProject.domain.model.Payer;
-import com.seidor.sgcx.hProject.domain.model.Project;
 import lombok.Getter;
 import lombok.Setter;
 

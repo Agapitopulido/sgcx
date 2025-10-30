@@ -1,13 +1,13 @@
-package com.seidor.sgcx.commons.entity;
+package com.seidor.sgcx.commons.adapter.ports.out.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "project_types")
+@Table(name = "technologies")
 @Getter
 @Setter
-public class ProjectType {
+public class Technology {
     @Id
     private Integer id;
 

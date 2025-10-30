@@ -1,8 +1,8 @@
-package com.seidor.sgcx.commons.dto;
+package com.seidor.sgcx.commons.adapter.ports.in.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class AuthResponseDto {
+public class AuthResponse {
 
     @JsonProperty("access_token")
     private String token;

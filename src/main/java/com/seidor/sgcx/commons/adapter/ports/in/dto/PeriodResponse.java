@@ -1,6 +1,6 @@
-package com.seidor.sgcx.commons.dto;
+package com.seidor.sgcx.commons.adapter.ports.in.dto;
 
-public class PeriodDto {
+public class PeriodResponse {
     private Integer id;
     private String code;
     private Integer year;

@@ -1,7 +1,7 @@
 openapi: 3.0.4
 info:
   title: SGCX - OpenAPI 3.0
-  version: 1.0.0
+  version: 1.0.3
 
 tags:
 
@@ -252,7 +252,7 @@ paths:
         - bearerAuth: []
       tags:
         - catalog
-      summary: Find all client
+      summary: Find all proyects manager
       description: return all clients for select filters
       responses:
         '200':
@@ -1067,6 +1067,11 @@ components:
               type: integer
               description: Identifier of the area responsible for the project.
               example: 5
+
+        payerId:
+          type: integer
+          description: Identifier of the payer related to the invoicing.
+          example: true
 
         billable:
           type: boolean

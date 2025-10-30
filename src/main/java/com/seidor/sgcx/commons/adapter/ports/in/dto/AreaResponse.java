@@ -1,12 +1,9 @@
-package com.seidor.sgcx.commons.dto;
+package com.seidor.sgcx.commons.adapter.ports.in.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
 
-@Getter
-@Setter
-public class GroupDto {
+
+public class AreaResponse {
     private Integer id;
     private String name;
     @JsonProperty("short_name")
